@@ -17,14 +17,20 @@ function addBasket(product) {
     let image = product.getElementsByTagName("img");
     let quantity = Number(product.getElementsByClassName("product__quantity-value")[0].textContent);
     let cartAdded = Array.from(cartProducts.getElementsByClassName("cart__product"));
-    let cartProductId;
+    let cartProductId = cartAdded.find(element => element.dataset.id === product.dataset.id);
+
+    if (cartProductId != undefined) {
+        cartProductId.querySelector(".cart__product-count").textContent = Number(cartProductId.querySelector(".cart__product-count").textContent) + quantity;
+    }
     
-    cartAdded.forEach(element => {
-        if (element.dataset.id === product.dataset.id) {
-            cartProductId = Number(element.dataset.id);
-            element.querySelector(".cart__product-count").textContent = Number(element.querySelector(".cart__product-count").textContent) + quantity;
-        }
-    })
+
+
+//    cartAdded.forEach(element => {
+//        if (element.dataset.id === product.dataset.id) {
+//            cartProductId = Number(element.dataset.id);
+//            element.querySelector(".cart__product-count").textContent = Number(element.querySelector(".cart__product-count").textContent) + quantity;
+//        }
+//    })
 
     if (cartProductId === undefined) {
         let cartProduct = document.createElement("div");

@@ -8,10 +8,10 @@ function toolTipNew() {
 
 text.forEach(element => {
     element.addEventListener("click", (event) => {
-        const deleted = document.querySelector(".tooltip");
-        if (deleted != null) {
-            deleted.remove();
-        } else {
+        const deleted = document.querySelector(".tooltip_active");
+        let tooltipActive = element.nextElementSibling;
+
+        function tooltipAdd() {
             let hint = toolTipNew();
             let elementPos = element.getBoundingClientRect();
 
@@ -20,7 +20,26 @@ text.forEach(element => {
 
             element.insertAdjacentElement("afterEnd", hint);
             hint.setAttribute("style", `left: ${elementPos.left}px`);
-            event.preventDefault();
         }
+
+        function tooltipShow() {
+            if (tooltipActive != null) {
+                if (tooltipActive.classList.contains("tooltip")) {
+                    tooltipActive.classList.toggle("tooltip_active");
+                } else {
+                    tooltipAdd();
+                }
+            } else {
+                tooltipAdd();
+            }
+        }
+
+        if (deleted != null) {
+            tooltipShow();
+            deleted.classList.remove("tooltip_active");
+        } else {
+            tooltipShow();
+        }
+        event.preventDefault();
     })
 })
