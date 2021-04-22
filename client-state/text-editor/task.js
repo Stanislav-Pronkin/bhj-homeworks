@@ -1,7 +1,7 @@
 const textarea = document.getElementById('editor');
 let save;
 
-if (localStorage.text !== "null") {
+if (localStorage.getItem('text')) {
     textarea.innerHTML = localStorage.text;
 }
 
